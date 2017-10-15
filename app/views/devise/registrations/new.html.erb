@@ -1,0 +1,36 @@
+<div class="row buffer-top">
+  <div class="col-sm-offset-3 col-sm-6">
+    <div class="panel panel-info">
+      <div class="panel-heading center">ลงทะเบียนเพื่อทำแบบประเมินความสามารถในการชำระหนี้</div>
+      <div class="panel-body">
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <div class="form-group">
+            <%= f.input :email, required: true, autofocus: true, :label => "Username",
+            :placeholder => "pid13@hcode5", :input_html => { "data-tooltip" => true,
+            :title => "ใส่เลขประชาชน 13 หลัก ตามด้วย @ และรหัสหน่วยงาน 5 หลัก เช่น 1234567890123@12345" } %>
+          </div>
+
+          <div class="form-group">
+            <%= f.input :password, required: true, :label => "รหัสผ่าน", :input_html => { "data-tooltip" => true,
+            :title => "รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร", :placeholder => "อย่างน้อย 6 ตัวอักษร" } %>
+          </div>
+
+          <div class="form-group">
+            <%= f.input :password_confirmation, required: true, :label => "ยืนยัน" %>
+          </div>
+
+          <div class="form-actions">
+            <%= f.button :submit, "ลงทะเบียน", :class => "btn btn-success" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-sm-offset-3 col-sm-6 center">
+    <%= link_to "ค้นหารหัสหน่วยงาน 5 หลัก", "http://203.157.10.8/hcode_2014/query_set.php?p=3", { :class => "btn btn-warning search",
+    :target => "_blank" } %>
+  </div>
+
+</div>
+

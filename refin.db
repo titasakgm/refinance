@@ -1,0 +1,1029 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: answers; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE answers (
+    id integer NOT NULL,
+    question_id integer,
+    text text,
+    short_text text,
+    help_text text,
+    weight integer,
+    response_class character varying(255),
+    reference_identifier character varying(255),
+    data_export_identifier character varying(255),
+    common_namespace character varying(255),
+    common_identifier character varying(255),
+    display_order integer,
+    is_exclusive boolean,
+    display_length integer,
+    custom_class character varying(255),
+    custom_renderer character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    default_value character varying(255),
+    api_id character varying(255),
+    display_type character varying(255),
+    input_mask character varying(255),
+    input_mask_placeholder character varying(255),
+    original_choice character varying(255),
+    is_comment boolean DEFAULT false,
+    column_id integer
+);
+
+
+ALTER TABLE public.answers OWNER TO admin;
+
+--
+-- Name: answers_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE answers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.answers_id_seq OWNER TO admin;
+
+--
+-- Name: answers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE answers_id_seq OWNED BY answers.id;
+
+
+--
+-- Name: columns; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE columns (
+    id integer NOT NULL,
+    question_group_id integer,
+    text text,
+    answers_textbox text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.columns OWNER TO admin;
+
+--
+-- Name: columns_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE columns_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.columns_id_seq OWNER TO admin;
+
+--
+-- Name: columns_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE columns_id_seq OWNED BY columns.id;
+
+
+--
+-- Name: dependencies; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE dependencies (
+    id integer NOT NULL,
+    question_id integer,
+    question_group_id integer,
+    rule character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.dependencies OWNER TO admin;
+
+--
+-- Name: dependencies_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE dependencies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dependencies_id_seq OWNER TO admin;
+
+--
+-- Name: dependencies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE dependencies_id_seq OWNED BY dependencies.id;
+
+
+--
+-- Name: dependency_conditions; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE dependency_conditions (
+    id integer NOT NULL,
+    dependency_id integer,
+    rule_key character varying(255),
+    question_id integer,
+    operator character varying(255),
+    answer_id integer,
+    datetime_value timestamp without time zone,
+    integer_value integer,
+    float_value double precision,
+    unit character varying(255),
+    text_value text,
+    string_value character varying(255),
+    response_other character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    column_id integer
+);
+
+
+ALTER TABLE public.dependency_conditions OWNER TO admin;
+
+--
+-- Name: dependency_conditions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE dependency_conditions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dependency_conditions_id_seq OWNER TO admin;
+
+--
+-- Name: dependency_conditions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE dependency_conditions_id_seq OWNED BY dependency_conditions.id;
+
+
+--
+-- Name: question_groups; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE question_groups (
+    id integer NOT NULL,
+    text text,
+    help_text text,
+    reference_identifier character varying(255),
+    data_export_identifier character varying(255),
+    common_namespace character varying(255),
+    common_identifier character varying(255),
+    display_type character varying(255),
+    custom_class character varying(255),
+    custom_renderer character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    api_id character varying(255)
+);
+
+
+ALTER TABLE public.question_groups OWNER TO admin;
+
+--
+-- Name: question_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE question_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.question_groups_id_seq OWNER TO admin;
+
+--
+-- Name: question_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE question_groups_id_seq OWNED BY question_groups.id;
+
+
+--
+-- Name: questions; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE questions (
+    id integer NOT NULL,
+    survey_section_id integer,
+    question_group_id integer,
+    text text,
+    short_text text,
+    help_text text,
+    pick character varying(255),
+    reference_identifier character varying(255),
+    data_export_identifier character varying(255),
+    common_namespace character varying(255),
+    common_identifier character varying(255),
+    display_order integer,
+    display_type character varying(255),
+    is_mandatory boolean,
+    display_width integer,
+    custom_class character varying(255),
+    custom_renderer character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    correct_answer_id integer,
+    api_id character varying(255),
+    modifiable boolean DEFAULT true,
+    dynamically_generate boolean DEFAULT false,
+    dummy_blob character varying(255),
+    dynamic_source character varying(255),
+    report_code character varying(255),
+    is_comment boolean DEFAULT false
+);
+
+
+ALTER TABLE public.questions OWNER TO admin;
+
+--
+-- Name: questions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE questions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.questions_id_seq OWNER TO admin;
+
+--
+-- Name: questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE questions_id_seq OWNED BY questions.id;
+
+
+--
+-- Name: response_sets; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE response_sets (
+    id integer NOT NULL,
+    user_id integer,
+    survey_id integer,
+    access_code character varying(255),
+    started_at timestamp without time zone,
+    completed_at timestamp without time zone,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    api_id character varying(255),
+    test_data boolean DEFAULT false
+);
+
+
+ALTER TABLE public.response_sets OWNER TO admin;
+
+--
+-- Name: response_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE response_sets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.response_sets_id_seq OWNER TO admin;
+
+--
+-- Name: response_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE response_sets_id_seq OWNED BY response_sets.id;
+
+
+--
+-- Name: responses; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE responses (
+    id integer NOT NULL,
+    response_set_id integer,
+    question_id integer,
+    answer_id integer,
+    datetime_value timestamp without time zone,
+    integer_value integer,
+    float_value double precision,
+    unit character varying(255),
+    text_value text,
+    string_value character varying(255),
+    response_other character varying(255),
+    response_group character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    survey_section_id integer,
+    api_id character varying(255),
+    blob character varying(255),
+    column_id integer
+);
+
+
+ALTER TABLE public.responses OWNER TO admin;
+
+--
+-- Name: responses_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE responses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.responses_id_seq OWNER TO admin;
+
+--
+-- Name: responses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE responses_id_seq OWNED BY responses.id;
+
+
+--
+-- Name: rows; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE rows (
+    id integer NOT NULL,
+    question_group_id integer,
+    text character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.rows OWNER TO admin;
+
+--
+-- Name: rows_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE rows_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rows_id_seq OWNER TO admin;
+
+--
+-- Name: rows_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE rows_id_seq OWNED BY rows.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO admin;
+
+--
+-- Name: survey_sections; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE survey_sections (
+    id integer NOT NULL,
+    survey_id integer,
+    title character varying(255),
+    description text,
+    reference_identifier character varying(255),
+    data_export_identifier character varying(255),
+    common_namespace character varying(255),
+    common_identifier character varying(255),
+    display_order integer,
+    custom_class character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    modifiable boolean DEFAULT true
+);
+
+
+ALTER TABLE public.survey_sections OWNER TO admin;
+
+--
+-- Name: survey_sections_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE survey_sections_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.survey_sections_id_seq OWNER TO admin;
+
+--
+-- Name: survey_sections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE survey_sections_id_seq OWNED BY survey_sections.id;
+
+
+--
+-- Name: survey_translations; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE survey_translations (
+    id integer NOT NULL,
+    survey_id integer,
+    locale character varying(255),
+    translation text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.survey_translations OWNER TO admin;
+
+--
+-- Name: survey_translations_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE survey_translations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.survey_translations_id_seq OWNER TO admin;
+
+--
+-- Name: survey_translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE survey_translations_id_seq OWNED BY survey_translations.id;
+
+
+--
+-- Name: surveys; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE surveys (
+    id integer NOT NULL,
+    title character varying(255),
+    description text,
+    access_code character varying(255),
+    reference_identifier character varying(255),
+    data_export_identifier character varying(255),
+    common_namespace character varying(255),
+    common_identifier character varying(255),
+    active_at timestamp without time zone,
+    inactive_at timestamp without time zone,
+    css_url character varying(255),
+    custom_class character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    display_order integer,
+    api_id character varying(255),
+    survey_version integer DEFAULT 0,
+    template boolean DEFAULT false,
+    user_id integer
+);
+
+
+ALTER TABLE public.surveys OWNER TO admin;
+
+--
+-- Name: surveys_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE surveys_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.surveys_id_seq OWNER TO admin;
+
+--
+-- Name: surveys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE surveys_id_seq OWNED BY surveys.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    email character varying(255) DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying(255) DEFAULT ''::character varying NOT NULL,
+    reset_password_token character varying(255),
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip inet,
+    last_sign_in_ip inet,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO admin;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO admin;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: validation_conditions; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE validation_conditions (
+    id integer NOT NULL,
+    validation_id integer,
+    rule_key character varying(255),
+    operator character varying(255),
+    question_id integer,
+    answer_id integer,
+    datetime_value timestamp without time zone,
+    integer_value integer,
+    float_value double precision,
+    unit character varying(255),
+    text_value text,
+    string_value character varying(255),
+    response_other character varying(255),
+    regexp character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.validation_conditions OWNER TO admin;
+
+--
+-- Name: validation_conditions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE validation_conditions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.validation_conditions_id_seq OWNER TO admin;
+
+--
+-- Name: validation_conditions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE validation_conditions_id_seq OWNED BY validation_conditions.id;
+
+
+--
+-- Name: validations; Type: TABLE; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE TABLE validations (
+    id integer NOT NULL,
+    answer_id integer,
+    rule character varying(255),
+    message character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.validations OWNER TO admin;
+
+--
+-- Name: validations_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE validations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.validations_id_seq OWNER TO admin;
+
+--
+-- Name: validations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE validations_id_seq OWNED BY validations.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY answers ALTER COLUMN id SET DEFAULT nextval('answers_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY columns ALTER COLUMN id SET DEFAULT nextval('columns_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY dependencies ALTER COLUMN id SET DEFAULT nextval('dependencies_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY dependency_conditions ALTER COLUMN id SET DEFAULT nextval('dependency_conditions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY question_groups ALTER COLUMN id SET DEFAULT nextval('question_groups_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY questions ALTER COLUMN id SET DEFAULT nextval('questions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY response_sets ALTER COLUMN id SET DEFAULT nextval('response_sets_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY responses ALTER COLUMN id SET DEFAULT nextval('responses_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY rows ALTER COLUMN id SET DEFAULT nextval('rows_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY survey_sections ALTER COLUMN id SET DEFAULT nextval('survey_sections_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY survey_translations ALTER COLUMN id SET DEFAULT nextval('survey_translations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY surveys ALTER COLUMN id SET DEFAULT nextval('surveys_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY validation_conditions ALTER COLUMN id SET DEFAULT nextval('validation_conditions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY validations ALTER COLUMN id SET DEFAULT nextval('validations_id_seq'::regclass);
+
+
+--
+-- Name: answers_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY answers
+    ADD CONSTRAINT answers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: columns_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY columns
+    ADD CONSTRAINT columns_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dependencies_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY dependencies
+    ADD CONSTRAINT dependencies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dependency_conditions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY dependency_conditions
+    ADD CONSTRAINT dependency_conditions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: question_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY question_groups
+    ADD CONSTRAINT question_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: questions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY questions
+    ADD CONSTRAINT questions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: response_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY response_sets
+    ADD CONSTRAINT response_sets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: responses_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY responses
+    ADD CONSTRAINT responses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rows_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY rows
+    ADD CONSTRAINT rows_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: survey_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY survey_sections
+    ADD CONSTRAINT survey_sections_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: survey_translations_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY survey_translations
+    ADD CONSTRAINT survey_translations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: surveys_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY surveys
+    ADD CONSTRAINT surveys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: validation_conditions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY validation_conditions
+    ADD CONSTRAINT validation_conditions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: validations_pkey; Type: CONSTRAINT; Schema: public; Owner: admin; Tablespace: 
+--
+
+ALTER TABLE ONLY validations
+    ADD CONSTRAINT validations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_responses_on_survey_section_id; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE INDEX index_responses_on_survey_section_id ON responses USING btree (survey_section_id);
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+
+
+--
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: response_sets_ac_idx; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX response_sets_ac_idx ON response_sets USING btree (access_code);
+
+
+--
+-- Name: surveys_access_code_version_idx; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX surveys_access_code_version_idx ON surveys USING btree (access_code, survey_version);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: uq_answers_api_id; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uq_answers_api_id ON answers USING btree (api_id);
+
+
+--
+-- Name: uq_question_groups_api_id; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uq_question_groups_api_id ON question_groups USING btree (api_id);
+
+
+--
+-- Name: uq_questions_api_id; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uq_questions_api_id ON questions USING btree (api_id);
+
+
+--
+-- Name: uq_response_sets_api_id; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uq_response_sets_api_id ON response_sets USING btree (api_id);
+
+
+--
+-- Name: uq_responses_api_id; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uq_responses_api_id ON responses USING btree (api_id);
+
+
+--
+-- Name: uq_surveys_api_id; Type: INDEX; Schema: public; Owner: admin; Tablespace: 
+--
+
+CREATE UNIQUE INDEX uq_surveys_api_id ON surveys USING btree (api_id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -58,3 +58,5 @@ gem 'thin'
 
 gem 'rb-readline'
 
+gem 'pry-nav'
+

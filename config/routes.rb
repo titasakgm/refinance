@@ -1,5 +1,7 @@
 Refin02::Application.routes.draw do
 
+  #### resource :admins
+
   devise_for :users, path_names: { sign_in: "login", sign_out: "logout" }
 
   mount SurveyorGui::Engine => "/surveyor_gui", :as => "surveyor_gui"
@@ -17,6 +19,14 @@ Refin02::Application.routes.draw do
     get 'users/welcome' => 'devise/sessions#welcome', :as => 'welcome'
     get 'users/login' => 'devise/sessions#new', :as => 'login'
     get 'users/logout' => 'devise/sessions#destroy', :method => :delete
+
+    # Add more routes 20171016 @starbucks
+
+    get 'surveyor_gui/logout' => 'devise/sessions#destroy', :method => :delete
+    get 'surveyor/score' => 'surveyor#score'
+    get 'surveyor/:survey_code/:response_set_code' => 'surveyor#show'
+    get 'surveyor/:survey_code/:response_set_code/take' => 'surveyor#edit'
+    get '/surveyor/edit' => 'surveyor#edit'
   end
 
   # Example of regular route:

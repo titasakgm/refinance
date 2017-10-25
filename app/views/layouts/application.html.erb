@@ -85,7 +85,7 @@
               {:class => "btn btn-warning", :style => "margin-top:19px;"} %>
 
             <div class="show-email">
-              <% user = current_user.email + ' ' + office_name %>
+              <% user = fullname %>
               <% if current_user.email =~ /^admin/ %>
                 <%= link_to user, '#',
                   {:class => "btn btn-danger btn-sm"} %>
@@ -116,8 +116,44 @@
 </div>
 
 <script>
+  var sex,age,sect,resp,prov;
+
+  function hide_flash() {
+    $('.surveyor_flash').hide();
+  }
+
   $(".alert" ).fadeOut(5000);
   $(".notice" ).fadeOut(5000);
+  setTimeout(hide_flash, 5000);
+
+  $(function() {
+    var href = window.document.location.href;
+
+    if (href.match('uinfo=')) {
+      u = decodeURIComponent(href).split('=')[1].split(',');
+
+      sex = u[0];
+      age = u[1];
+      sect = u[2];
+      resp = u[3];
+      prov = u[4];
+    
+      // set values of survey form
+      $('#r_1_string_value').val(sect);
+      $('#r_2_string_value').val(resp);
+      provx = $("#r_3_answer_id option:contains('" + prov + "')").val();
+      $('#r_3_answer_id').val(provx);
+      if (sex == '1') {
+        $('#r_1_answer_id_80').attr('checked',true);
+      } else if (sex == '2') {
+        $('#r_1_answer_id_81').attr('checked',true);
+      } else {
+        $('#r_1_answer_id_82').attr('checked',true);
+      }
+      $('#r_2_integer_value').val(age);
+    }
+  });
+  
 </script>
 
 </body>

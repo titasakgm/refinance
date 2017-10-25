@@ -1,4 +1,7 @@
 # encoding: UTF-8
+
+include ApplicationHelper
+
 module SurveyorControllerCustomMethods
   def self.included(base)
     # base.send :before_filter, :require_user   # AuthLogic
@@ -15,12 +18,15 @@ module SurveyorControllerCustomMethods
     super
     survey_taken
 
-    @title = "Welcome to BPS Refinance Survey"
+    pid13 = current_user.email.split('@').first
+    @uinfo = get_user_info(pid13)
+
+    @title = "Welcome to BPS Happy Money Survey"
 
     if @flag == true
-      redirect_to "/surveys/refinance/#{@taken.first.access_code}"
+      redirect_to "/surveys/refinance/#{@taken.first.access_code}?uinfo=#{@uinfo}"
     elsif @flag == false
-      redirect_to "/surveys/refinance/#{@taken.first.access_code}/take"
+      redirect_to "/surveys/refinance/#{@taken.first.access_code}/take?uinfo=#{@uinfo}"
     end
 
   end

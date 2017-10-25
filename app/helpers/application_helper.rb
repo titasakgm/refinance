@@ -1,6 +1,34 @@
+# encoding: utf-8
+
+require 'pry-nav'
+
 module ApplicationHelper
+
+  # Add 20171017
+
+  def fullname
+    current_user.email.split('@').first + ' ' + office_name
+  end
+
+
+  # Add 20171017
+
+  def get_user_info(pid='1234567890123')
+    u = UserInfo.find_by_pid13(pid)
+    if u.division != "NA"
+      resp = "#{u.division} #{u.department}"
+    else
+      resp = u.offname
+    end
+
+    uinfo = "#{u.sex.strip},#{u.age},#{u.section},#{resp},#{u.province}"
+  end
+
+  # Add 20171017
+
   def office_name
-    current_user.email.split('@').last
+    hc5 = current_user.email.split('@').last
+    offname = Admin.find_by_hcode5(hc5).offname
   end
 
   def bootstrap_class_for flash_type
@@ -15,6 +43,19 @@ module ApplicationHelper
             end)
     end
     nil
+  end
+
+  def custom_message(msg)
+    if msg =~ /กรุณา/
+      type = 'info'
+    elsif msg =~ /ยัง/
+      type = 'warning'
+    elsif msg =~ /ขออภัย/
+      type = 'danger'
+    else
+      type = 'success'
+    end
+    type
   end
 
 end

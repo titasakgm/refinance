@@ -30,7 +30,6 @@ class Devise::SessionsController < DeviseController
       username = resource.email.split('@').first.downcase
       if (username =~ /\d{13}/ and username.length == 13) 
         #respond_with resource, location: after_sign_in_path_for(resource)
-        @user = get_user_info(username)
         redirect_to '/surveys'
       else
         respond_with resource, location: '/users/sign_up'

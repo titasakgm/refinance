@@ -20,7 +20,7 @@ class Devise::RegistrationsController < DeviseController
     @username = resource.email.split('@').first
     @hcode5 = resource.email.split('@').last
 
-    if (@username.length == 13)
+    if (@username and @username.length == 13)
       if !check_valid_pid13?
         redirect_to '/users/sign_up', :alert => "ขออภัย หมายเลขบัตรประชาชน 13 หลักไม่ถูกต้อง"
         return
@@ -87,6 +87,7 @@ class Devise::RegistrationsController < DeviseController
   end
 
   def check_valid_username?
+    return false if @username.nil?
     if (@username =~ /\d{13}/ and @username.length == 13)
       return true
     elsif (@username.downcase == 'admin')

@@ -13,19 +13,6 @@ module ApplicationHelper
 
   # Add 20171017
 
-  def get_user_info(pid='1234567890123')
-    u = UserInfo.find_by_pid13(pid)
-    if u.division != "NA"
-      resp = "#{u.division} #{u.department}"
-    else
-      resp = u.offname
-    end
-
-    uinfo = "#{u.sex.strip},#{u.age},#{u.section},#{resp},#{u.province}"
-  end
-
-  # Add 20171017
-
   def office_name
     hc5 = current_user.email.split('@').last
     offname = Admin.find_by_hcode5(hc5).offname

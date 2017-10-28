@@ -12,6 +12,16 @@
  *= require_tree .
  */
 
+#help_text {
+  color: blue;
+  display: none;
+  font-weight: bold;
+}
+
+#help_text p {
+  font-size: 0.8em;
+}
+
 #logo {
   width: 50%;
 }

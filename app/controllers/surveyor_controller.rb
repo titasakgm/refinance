@@ -19,14 +19,12 @@ module SurveyorControllerCustomMethods
     survey_taken
 
     pid13 = current_user.email.split('@').first
-    @uinfo = get_user_info(pid13)
-
     @title = "Welcome to BPS Happy Money Survey"
 
     if @flag == true
-      redirect_to "/surveys/refinance/#{@taken.first.access_code}?uinfo=#{@uinfo}"
+      redirect_to "/surveys/refinance/#{@taken.first.access_code}"
     elsif @flag == false
-      redirect_to "/surveys/refinance/#{@taken.first.access_code}/take?uinfo=#{@uinfo}"
+      redirect_to "/surveys/refinance/#{@taken.first.access_code}/take"
     end
 
   end

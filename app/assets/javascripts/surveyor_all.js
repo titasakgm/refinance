@@ -47,9 +47,14 @@ $(function() {
     // format number
     $(this).val(function(index, value) {
       if (parseFloat(value) > 0 && value.length > 3) {
-        return value
-        .replace(/\D/g, "")
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        id = this.id;
+        if (id.match(/email/) == null && id.match(/pass/) == null && id.match(/telno/) == null) {
+          return value          
+          .replace(/\D/g, "")
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        } else {
+          return value;
+        }
       } else {
         return value;
       }

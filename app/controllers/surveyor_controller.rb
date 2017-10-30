@@ -23,7 +23,7 @@ module SurveyorControllerCustomMethods
     rs_id = ResponseSet.where(:user_id => current_user.id).first.id
     (166..172).each do |a|
       o = Response.where(:response_set_id => rs_id,:answer_id => a).first
-      if o.string_value
+      if o and o.string_value
         rev = o.string_value.to_s.tr(',','').to_i
       else
         rev = 0

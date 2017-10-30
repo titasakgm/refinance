@@ -22,22 +22,42 @@ module SurveyorControllerCustomMethods
 
     rs_id = ResponseSet.where(:user_id => current_user.id).first.id
     (166..172).each do |a|
-      rev = Response.where(:response_set_id => rs_id,:answer_id => a).first.string_value
-      rev = rev.tr(',','').to_i
+      o = Response.where(:response_set_id => rs_id,:answer_id => a).first
+      if o.string_value
+        rev = o.string_value.to_s.tr(',','').to_i
+      else
+        rev = 0
+      end
       @revenue += rev
     end
 
-    @exp_a = Response.where(:response_set_id => rs_id, :answer_id => 173).limit(1).first.string_value
-    @exp_a = @exp_a.tr(',','').to_i
+    o = Response.where(:response_set_id => rs_id, :answer_id => 173).limit(1).first
+    if o and o.string_value
+      @exp_a = o.string_value.to_s.tr(',','').to_i
+    else
+      @exp_a = 0
+    end
 
-    @exp_b = Response.where(:response_set_id => rs_id, :answer_id => 174).limit(1).first.string_value
-    @exp_b = @exp_b.tr(',','').to_i
+    o = Response.where(:response_set_id => rs_id, :answer_id => 174).limit(1).first
+    if o and o.string_value
+      @exp_b = o.string_value.to_s.tr(',','').to_i
+    else
+      @exp_b = 0
+    end
 
-    @exp_c = Response.where(:response_set_id => rs_id, :answer_id => 175).limit(1).first.string_value
-    @exp_c = @exp_c.tr(',','').to_i
+    o = Response.where(:response_set_id => rs_id, :answer_id => 175).limit(1).first
+    if o and o.string_value
+      @exp_c = o.string_value.to_s.tr(',','').to_i
+    else
+      @exp_c = 0
+    end
 
-    @exp_d = Response.where(:response_set_id => rs_id, :answer_id => 176).limit(1).first.string_value
-    @exp_d = @exp_d.tr(',','').to_i
+    o = Response.where(:response_set_id => rs_id, :answer_id => 176).limit(1).first
+    if o and o.string_value
+      @exp_d = o.string_value.to_s.tr(',','').to_i
+    else
+      @exp_d = 0
+    end
 
     @balance = @revenue - (@exp_a + @exp_b + @exp_c + @exp_d)
 

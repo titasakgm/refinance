@@ -46,10 +46,13 @@ $(function() {
 
     // format number
     $(this).val(function(index, value) {
-      return value
-      .replace(/\D/g, "")
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      if (parseFloat(value) > 0 && value.length > 3) {
+        return value
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      } else {
+        return value;
+      }
     });
   });
-
 });

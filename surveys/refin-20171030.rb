@@ -411,39 +411,45 @@ survey "HAPPYMONEY" do
     a_2 "เคย"
  
     q_0501b "จำนวนครั้งที่ท่านเคยรีไฟแนนซ์"
-    dependency :rule => "A and B"
-    condition_A :q_0501, "!=", :a_1
-    condition_B :q_0501a, "==", :a_2      
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0501, "==", :a_2
+    condition_B :q_0501, "==", :a_3
+    condition_C :q_0501a, "==", :a_2      
     a "|ครั้ง", :string 
 
     label "หากเคยรีไฟแนนซ์ (refinance) ที่อยู่อาศัยและยังผ่อนชำระหนี้ที่อยู่อาศัยในปัจจุบัน"
-    dependency :rule => "A and B"
-    condition_A :q_0501, "!=", :a_1
-    condition_B :q_0501a, "==", :a_2
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0501, "==", :a_2
+    condition_B :q_0501, "==", :a_3
+    condition_C :q_0501a, "==", :a_2
       
     q_0501c "ครั้งสุดท้ายที่รีไฟแนนซ์ (refinance) ที่อยู่อาศัย  มียอดหนี้รวม"
-    dependency :rule => "A and B"
-    condition_A :q_0501, "!=", :a_1
-    condition_B :q_0501a, "==", :a_2
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0501, "==", :a_2
+    condition_B :q_0501, "==", :a_3
+    condition_C :q_0501a, "==", :a_2
     a "|บาท", :string
 
     q_0501d "ดอกเบี้ยปัจจุบันร้อยละ"
-    dependency :rule => "A and B"
-    condition_A :q_0501, "!=", :a_1
-    condition_B :q_0501a, "==", :a_2
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0501, "==", :a_2
+    condition_B :q_0501, "==", :a_3
+    condition_C :q_0501a, "==", :a_2
     a "|บาท (ต่อปี)", :string
 
     q_0501e "ผ่อนชำระมาแล้ว"
-    dependency :rule => "A and B"
-    condition_A :q_0501, "!=", :a_1
-    condition_B :q_0501a, "==", :a_2
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0501, "==", :a_2
+    condition_B :q_0501, "==", :a_3
+    condition_C :q_0501a, "==", :a_2
     a "|ปี", :string
     a "|เดือน", :string
 
     q_0501f "เหลือผ่อนชำระอีก"
-    dependency :rule => "A and B"
-    condition_A :q_0501, "!=", :a_1
-    condition_B :q_0502, "==", :a_2
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0501, "==", :a_2
+    condition_B :q_0501, "==", :a_3
+    condition_C :q_0501a, "==", :a_2
     a "|ปี", :string
     a "|เดือน", :string     
 
@@ -487,16 +493,18 @@ survey "HAPPYMONEY" do
 
     q_0503a "ท่านมีแผนที่จะกู้เงินเพื่อซื้อ/สร้างที่อยู่อาศัยในช่วง 3 ปีนี้ หรือไม่",
       :pick => :one, :display_type => :inline
-    dependency :rule => "A"
-    condition_A :q_0503, "!=", :a_3
+    dependency :rule => "A or B"
+    condition_A :q_0503, "==", :a_1
+    condition_B :q_0503, "==", :a_2
     a_1 "ไม่มีแผน"
     a_2 "มีแผน"
 
     q_0503b "ถ้าท่านมีแผนการซื้อ/สร้างที่อยู่อาศัย ท่านสนใจประเภทใด",
       :pick => :one, :display_type => :inline
-    dependency :rule => "A and B"
-    condition_A :q_0503, "!=", :a_3
-    condition_B :q_0503a, "==", :a_2
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0503, "==", :a_1
+    condition_B :q_0503, "==", :a_2
+    condition_C :q_0503a, "==", :a_2
     a "บ้าน"
     a "บ้านพร้อมที่ดิน"
     a "ทาวน์เฮ้าส์"
@@ -504,9 +512,10 @@ survey "HAPPYMONEY" do
     a "คอนโดมิเนียม"
     
     q_0503c "ในวงเงิน (บาท)", :pick => :one, :display_type => :inline
-    dependency :rule => "A and B"
-    condition_A :q_0503, "!=", :a_3
-    condition_B :q_0503a, "==", :a_2    
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0503, "==", :a_1
+    condition_B :q_0503, "==", :a_2
+    condition_C :q_0503a, "==", :a_2    
     a "ต่ำกว่า 1 แสนบาท"
     a "1-5 แสนบาท"
     a "5 แสน – 1 ล้านบาท"
@@ -523,9 +532,10 @@ survey "HAPPYMONEY" do
 
     q_0503d "และอัตราดอกเบี้ยสูงสุดที่ท่านยอมรับได้มากที่สุดในช่วง 3 ปีแรก เทียบกับอัตราดอกเบี้ยสินเชื่อของธนาคาร
       (MLR) โดยเฉลี่ย", :pick => :one, :display_type => :inline
-    dependency :rule => "A and B"
-    condition_A :q_0503, "!=", :a_3
-    condition_B :q_0503a, "==", :a_2
+    dependency :rule => "(A or B) and C"
+    condition_A :q_0503, "==", :a_1
+    condition_B :q_0503, "==", :a_2
+    condition_C :q_0503a, "==", :a_2
     a "น้อยกว่า 2 % ต่อปี"
     a "2-3 % ต่อปี"
     a "3-4 % ต่อปี"

@@ -23,10 +23,10 @@ Refin02::Application.routes.draw do
     # Add more routes 20171016 @starbucks
 
     get 'surveyor_gui/logout' => 'devise/sessions#destroy', :method => :delete
-    get 'surveyor/score' => 'surveyor#score'
     get 'surveyor/:survey_code/:response_set_code' => 'surveyor#show'
     get 'surveyor/:survey_code/:response_set_code/take' => 'surveyor#edit'
     get '/surveyor/edit' => 'surveyor#edit'
+    get '/surveyor/result' => 'surveyor#result'
   end
 
   # Example of regular route:

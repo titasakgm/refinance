@@ -12,6 +12,22 @@
  *= require_tree .
  */
 
+#id_result {
+  margin-top: 100px;
+}
+
+#result_1 {
+  line-height: 2em;
+  padding: 10px;
+  font-size: 2em;
+}
+
+#result_2 {
+  line-height: 2em;
+  padding: 10px;
+  font-size: 2em;
+}
+
 #help_text {
   color: blue;
   display: none;

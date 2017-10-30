@@ -30,6 +30,9 @@
             <%= link_to "Logout", "/users/logout",
               {:class => "btn btn-warning", :style => "margin-top:19px;"} %>
 
+            <%= link_to "Result", "/surveyor/result",
+              {:class => "btn btn-info", :style => "margin-top:19px;"} %>
+
             <div class="show-email">
               <% user = fullname %>
               <% if current_user.email =~ /^admin/ %>

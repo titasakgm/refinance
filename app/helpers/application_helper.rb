@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require 'pry-nav'
-
 module ApplicationHelper
 
   # Add 20171017

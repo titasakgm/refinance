@@ -1,0 +1,30 @@
+#encoding: UTF-8
+
+<div id="id_result" class="row">
+  <div class="col-md-12">
+  <table border="1">
+  <tr><td id="result_1">
+  <% if @balance < 0 %>
+    <font color='red'>ท่านมีรายจ่ายมากกว่ารายรับโดยประมาณ 
+    <b><%= number_with_delimiter(@balance, :delimiter => ',') %></b> บาท</font><br/>
+  <% else %>
+    <font color='green'>ท่านมีรายรับมากกว่ารายจ่ายโดยประมาณ 
+    <b><%= number_with_delimiter(@balance, :delimiter => ',') %></b> บาท</font><br/>
+  <% end %>  
+  </th></tr>
+  <tr><td id="result_2" bgcolor='<%= @result_bg %>'>
+  <font color='<%= @result_fg %>'>สถานะการเงินของท่านอยู่ในระดับ <b><%= @status %></b></font><br/>
+  </th></tr>
+  </table>
+
+  <br/><br/>
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-danger">วิกฤต หมายถึง มีหนี้สินรวมเกินร้อยละ 50 ของรายรับทั้งหมด และหนี้ผ่อนบ้านหรือที่อยู่อาศัยเกินร้อยละ 30 ของรายรับทั้งหมด</li>
+    <li class="list-group-item list-group-item-warning">ไม่เหมาะสมแต่ยังไม่ถึงวิกฤติ หมายถึง มีหนี้สินรวมเกินร้อยละ 50 ของรายรับทั้งหมด หรือมีหนี้ผ่อนบ้านหรือที่อยู่อาศัยเกินร้อยละ 30 ของรายรับทั้งหมด</li>
+    <li class="list-group-item list-group-item-info">เหมาะสม หมายถึง มีหนี้สินรวมไม่เกินร้อยละ 50 ของรายรับทั้งหมด และหนี้ผ่อนบ้านหรือที่อยู่อาศัยไม่เกินร้อยละ 30 ของรายรับทั้งหมด</li>
+    <li class="list-group-item list-group-item-success">ไม่มีหนี้สิน</li>
+  </ul>
+
+  </div>
+</div>
+

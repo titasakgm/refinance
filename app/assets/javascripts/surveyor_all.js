@@ -40,16 +40,12 @@ $(function() {
     }
   });
 
-  $('input.string').keyup(function(event) {
-    // skip for arrow keys
-    if(event.which >= 37 && event.which <= 40) return;
+  $.fn.digits = function(){
+    return this.each(function(){
+      $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
+    })
+  }
 
-    // format number
-    $(this).val(function(index, value) {
-      return value
-      .replace(/\D/g, "")
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    });
-  });
+  $('.string').digits();
 
 });

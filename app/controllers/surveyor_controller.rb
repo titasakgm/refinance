@@ -20,9 +20,12 @@ module SurveyorControllerCustomMethods
     @exp_c = 0
     @exp_d = 0
 
+    # find response_set_id for current user
     rs_id = ResponseSet.where(:user_id => current_user.id).first.id
+
+    # revenue now is string_value from answer_id 166-172
     (166..172).each do |a|
-      o = Response.where(:response_set_id => rs_id,:answer_id => a).first
+      o = Response.where(:response_set_id => rs_id,:answer_id => a).limit(1).first
       if o and o.string_value
         rev = o.string_value.to_s.tr(',','').to_i
       else
@@ -31,6 +34,7 @@ module SurveyorControllerCustomMethods
       @revenue += rev
     end
 
+    # mortgage loan for house
     o = Response.where(:response_set_id => rs_id, :answer_id => 173).limit(1).first
     if o and o.string_value
       @exp_a = o.string_value.to_s.tr(',','').to_i
@@ -38,6 +42,7 @@ module SurveyorControllerCustomMethods
       @exp_a = 0
     end
 
+    # other debts
     o = Response.where(:response_set_id => rs_id, :answer_id => 174).limit(1).first
     if o and o.string_value
       @exp_b = o.string_value.to_s.tr(',','').to_i
@@ -45,6 +50,7 @@ module SurveyorControllerCustomMethods
       @exp_b = 0
     end
 
+    # other expenses
     o = Response.where(:response_set_id => rs_id, :answer_id => 175).limit(1).first
     if o and o.string_value
       @exp_c = o.string_value.to_s.tr(',','').to_i
@@ -52,16 +58,20 @@ module SurveyorControllerCustomMethods
       @exp_c = 0
     end
 
+    # investment (LTF RMF) per year MUST divided by 12.0 per month
     o = Response.where(:response_set_id => rs_id, :answer_id => 176).limit(1).first
     if o and o.string_value
-      @exp_d = o.string_value.to_s.tr(',','').to_i
+      @exp_d = o.string_value.to_s.tr(',','').to_i / 12.0
     else
       @exp_d = 0
     end
 
     @balance = @revenue - (@exp_a + @exp_b + @exp_c + @exp_d)
 
+    # criteria @ 50%
     pct_1 = (@exp_a + @exp_b) * 100.0 / @revenue
+
+    # criteria @ 30%
     pct_2 = @exp_a * 100.0 / @revenue
 
     if @exp_a == 0 and @exp_b == 0.0
@@ -81,6 +91,7 @@ module SurveyorControllerCustomMethods
       @result_bg = 'lightyellow'
       @result_fg = 'brown'
     end
+    # render view result.html.erb
   end
 
   def welcome

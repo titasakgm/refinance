@@ -12,20 +12,59 @@
  *= require_tree .
  */
 
+#objective {
+  color: green;
+  padding-bottom: 10px;
+}
+
+#secret {
+  color: red;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+#footer {
+  text-align: center;
+}
+
+#thank {
+  font-size: 1.6em;
+  color: blue;
+  margin-bottom: 20px;
+}
+
+#bps {
+  font-size: 1.2em;
+  color: blue;
+  margin-bottom: 20px;
+}
+
 #id_result {
   margin-top: 100px;
 }
 
 #result_1 {
-  line-height: 2em;
+  line-height: 1.5em;
   padding: 10px;
-  font-size: 2em;
+  font-size: 1.2em;
 }
 
 #result_2 {
-  line-height: 2em;
+  line-height: 1.5em;
   padding: 10px;
-  font-size: 2em;
+  font-size: 1.2em;
+}
+
+#refin_text {
+  color: blue;
+  display: none;
+  font-weight: bold;
+}
+
+#manual_text {
+  color: blue;
+  display: none;
+  font-weight: bold;
 }
 
 #help_text {
@@ -39,7 +78,7 @@
 }
 
 #logo {
-  width: 50%;
+  width: 80%;
 }
 
 .alert {

@@ -6,6 +6,8 @@
 //= require surveyor/jquery.maskedinput
 
 var sect5, s5, count=0;
+var man, man_btn;
+var refin, refinx;
 
 function hide_flash() {
   $('.surveyor_flash').hide();
@@ -16,6 +18,22 @@ $(".notice" ).fadeOut(5000);
 setTimeout(hide_flash, 5000);
 
 $(function() {
+  refin = $("#refin_text");
+  refin.dialog({
+    title: "คำอธิบายการรีไฟแนนซ์",
+    autoOpen: false,
+    modal: true,
+    width: "500px",
+    show: {
+      effect: "blind",
+      duration: 1000
+    },
+    hide: {
+      effect: "explode",
+      duration: 1000
+    }
+  });
+
   sect5 = $("#help_text");
   sect5.dialog({
     title: "ตัวอย่างการทำรีไฟแนนซ์",
@@ -30,6 +48,35 @@ $(function() {
       effect: "explode",
       duration: 1000
     }
+  });
+
+  man = $("#manual_text");
+  man.dialog({
+    title: "คำชี้แจงการทำแบบประเมินฯ",
+    autoOpen: false,
+    modal: true,
+    width: "500px",
+    show: {
+      effect: "blind",
+      duration: 1000
+    },
+    hide: {
+      effect: "explode",
+      duration: 1000
+    }
+  });
+
+  refinx = $("#survey_section_5 span.title");
+  refinx.mouseover(function(){
+    count += 1;
+    if (count % 3 == 1) {
+      refin.dialog("open");
+    }
+  });
+
+  man_btn = $(".manual");
+  man_btn.mouseover(function(){
+    man.dialog("open");
   });
 
   s5 = $("#survey_section_5 #q_58 legend span");

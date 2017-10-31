@@ -6,10 +6,10 @@
   <tr><td id="result_1">
   <% if @balance < 0 %>
     <font color='red'>ท่านมีรายจ่ายมากกว่ารายรับโดยประมาณ 
-    <b><%= number_with_delimiter(@balance, :delimiter => ',') %></b> บาท</font><br/>
+    <b><%= number_with_delimiter(@balance.to_i, :delimiter => ',') %></b> บาท</font><br/>
   <% else %>
     <font color='green'>ท่านมีรายรับมากกว่ารายจ่ายโดยประมาณ 
-    <b><%= number_with_delimiter(@balance, :delimiter => ',') %></b> บาท</font><br/>
+    <b><%= number_with_delimiter(@balance.to_i, :delimiter => ',') %></b> บาท</font><br/>
   <% end %>  
   </th></tr>
   <tr><td id="result_2" bgcolor='<%= @result_bg %>'>
@@ -28,3 +28,7 @@
   </div>
 </div>
 
+<div id="footer">
+  <div id="thank">ขอขอบคุณทุกท่านที่มีส่วนร่วมในการตอบแบบประเมินนี้</div>
+  <div id="bps">จัดทำโดย กองยุทธศาสตร์และแผนงาน สำนักงานปลัด กระทรวงสาธารณสุข</div>
+</div>

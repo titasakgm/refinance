@@ -6,7 +6,7 @@
 //= require surveyor/jquery.maskedinput
 
 var sect5, s5, count=0;
-var man, man_btn;
+var man, man_btn, manual_text;
 var refin, refinx;
 
 function hide_flash() {

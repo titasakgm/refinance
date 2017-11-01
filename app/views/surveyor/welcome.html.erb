@@ -6,7 +6,8 @@
   <span>
     <%= link_to "ลงทะเบียน", new_user_registration_path,
       :class => "btn btn-info btn-lg text-white" %>
-    <%= link_to "คำแนะนำ", "#",
+    <%= link_to "คำแนะนำ", "#", 
+      :onclick => "man.dialog('open');",
       :class => "btn btn-warning btn-lg text-white manual" %>
     <%= link_to "เข้าสู่ระบบ", surveyor_path,
       :class => "btn btn-success btn-lg text-white" %>

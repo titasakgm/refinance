@@ -12,6 +12,13 @@
  *= require_tree .
  */
 
+#not-done {
+  color: brown;
+  font-size: 1.5em;
+  text-align: center;
+  margin: 100px;
+}
+
 #objective {
   color: green;
   padding-bottom: 10px;

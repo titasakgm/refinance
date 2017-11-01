@@ -13,6 +13,7 @@ module SurveyorControllerCustomMethods
 
   # Actions
   def result
+    @balance = 0
     @revenue = 0
     @expense = 0
     @exp_a = 0
@@ -21,7 +22,12 @@ module SurveyorControllerCustomMethods
     @exp_d = 0
 
     # find response_set_id for current user
-    rs_id = ResponseSet.where(:user_id => current_user.id).first.id
+    rs_id = ResponseSet.where(:user_id => current_user.id).first
+
+    # FIX error when user just login and press [Result]
+    return if rs_id = [] or rs_id.nil?
+
+    rs_id = rs_id.id
 
     # revenue now is string_value from answer_id 166-172
     (166..172).each do |a|

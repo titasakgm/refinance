@@ -25,7 +25,7 @@ module SurveyorControllerCustomMethods
     rs_id = ResponseSet.where(:user_id => current_user.id).first
 
     # FIX error when user just login and press [Result]
-    return if rs_id = [] or rs_id.nil?
+    return if rs_id == [] or rs_id.nil?
 
     rs_id = rs_id.id
 

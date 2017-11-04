@@ -12,6 +12,19 @@
  *= require_tree .
  */
 
+#note {
+  margin-top: 5px;
+  color: red;
+  font-size: 12px;
+}
+
+#contact {
+  margin-top: 10px;
+  color: green;
+  background-color: #C1F7DA;
+  font-size: 12px;
+}
+
 #not-done {
   color: brown;
   font-size: 1.5em;

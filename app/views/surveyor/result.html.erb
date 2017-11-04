@@ -11,10 +11,10 @@
       <tr><td id="result_1">
       <% if @balance < 0 %>
         <font color='red'>ท่านมีรายจ่ายมากกว่ารายรับโดยประมาณ 
-        <b><%= number_with_delimiter(@balance.to_i, :delimiter => ',') %></b> บาท</font><br/>
+        <b><%= number_with_delimiter(@balance.to_i, :delimiter => ',') %></b> บาท ต่อเดือน</font><br/>
       <% else %>
         <font color='green'>ท่านมีรายรับมากกว่ารายจ่ายโดยประมาณ 
-        <b><%= number_with_delimiter(@balance.to_i, :delimiter => ',') %></b> บาท</font><br/>
+        <b><%= number_with_delimiter(@balance.to_i, :delimiter => ',') %></b> บาท ต่อเดือน</font><br/>
       <% end %>  
       </td></tr>
       <tr><td id="result_2" bgcolor='<%= @result_bg %>'>

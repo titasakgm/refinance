@@ -303,7 +303,7 @@ survey "HAPPYMONEY" do
       q_0401a5 "ดอกเบี้ยกู้ ณ ปัจจุบัน ร้อยละ"
       dependency :rule => "A"
       condition_A :q_0401, "==", :a_2
-      a "|บาท", :string
+      a :string
         
       q_0401a6 "ผ่อนชำระขั้นต่ำต่อเดือน"
       dependency :rule => "A"
@@ -366,7 +366,7 @@ survey "HAPPYMONEY" do
       q_0401b5 "ดอกเบี้ยกู้ ณ ปัจจุบัน ร้อยละ"
       dependency :rule => "A"
       condition_A :q_0401, "==", :a_2  
-      a "|บาท", :string
+      a :string
         
       q_0401b6 "ผ่อนชำระขั้นต่ำต่อเดือน"
       dependency :rule => "A"
@@ -511,8 +511,8 @@ survey "HAPPYMONEY" do
       :pick => :one, :display_type => :inline
     dependency :rule => "A"
     condition_A :q_0504, "==", :a_2
-    a "บ้าน"
-    a "บ้านพร้อมที่ดิน"
+    a "สร้างบ้าน"
+    a "ซื้อบ้านเดี่ยว"
     a "ทาวน์เฮ้าส์"
     a "อาคารพาณิชย์"
     a "คอนโดมิเนียม"

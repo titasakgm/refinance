@@ -12,6 +12,10 @@
  *= require_tree .
  */
 
+#step {
+    margin-top: 20px;
+}
+
 #note {
   margin-top: 5px;
   color: red;

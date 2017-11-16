@@ -37,7 +37,12 @@ class Devise::RegistrationsController < DeviseController
       return
     end
 
-    resource.save
+    if !check_dup?
+      resource.save
+      redirect_to after_sign_up_path_for(resource), :alert => "ท่านเคยลงทะเบียนไปแล้ว โปรด Sign in เพื่อทำแบบทดสอบ"
+      return
+    end
+
     yield resource if block_given?
 
     redirect_to after_sign_up_path_for(resource), :alert => "ลงทะเบียนสำเร็จ โปรด Sign in เพื่อทำแบบทดสอบ" and return
@@ -95,6 +100,11 @@ class Devise::RegistrationsController < DeviseController
     else
       return false
     end
+  end
+
+  def check_dup?
+    u = User.find_by_email(resource.email)
+    return (u.nil?) ? false : true
   end
 
   # GET /resource/edit

@@ -12,6 +12,14 @@
  *= require_tree .
  */
 
+#extra {
+  position: absolute;
+  color: red;
+  top: -60px;
+  left: 0;
+  right: 0;
+}
+
 #step {
     margin-top: 20px;
 }
